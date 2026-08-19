@@ -49,6 +49,29 @@ The output jar is `build/libs/renderdistancemod-1.0.0.jar`.
 
 CI builds on every push and pull request: [`.github/workflows/build.yml`](.github/workflows/build.yml).
 
+## Releasing
+
+1. Bump `mod_version` in [`gradle.properties`](gradle.properties).
+2. Commit and push to GitHub.
+3. Tag the same version and push the tag:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The [Release](.github/workflows/release.yml) workflow builds the jar and publishes a [GitHub Release](https://github.com/Dead4W/entity_render_distance_mod/releases) with `renderdistancemod-<version>.jar`. The tag must be `v` plus `mod_version` (for example `v1.0.0`).
+
+## AI-generated code
+
+About **90%** of this project's code was generated with AI assistance. Human review and edits were applied, but the implementation should still be treated as AI-generated software.
+
+## Disclaimer
+
+This software is provided **as is**, without warranty of any kind, express or implied, including but not limited to merchantability, fitness for a particular purpose, and noninfringement.
+
+Use it at your own risk. The author is not liable for crashes, world corruption, data loss, performance issues, security problems, or any other damage arising from installing, running, or modifying this mod.
+
 ## License
 
 Mod source and binaries: **All Rights Reserved** © 2026 Dead4W. See [`LICENSE`](LICENSE).
