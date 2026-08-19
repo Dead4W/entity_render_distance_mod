@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,4 +23,31 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: |
+          set +e
+          max_attempts=3
+          delay=30
+          attempt=1
+          while [ "$attempt" -le "$max_attempts" ]; do
+            echo "::group::Gradle build attempt ${attempt}/${max_attempts}"
+            log="$(mktemp)"
+            ./gradlew build 2>&1 | tee "$log"
+            status="${PIPESTATUS[0]}"
+            echo "::endgroup::"
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$attempt" -eq "$max_attempts" ]; then
+              echo "Gradle build failed after ${max_attempts} attempts"
+              exit "$status"
+            fi
+            if grep -Eqi 'Received status code 50[0-9]|Bad Gateway|Gateway Time-out|Could not GET |Could not GET resource|Connection reset|Connection timed out|Temporary failure in name resolution' "$log"; then
+              echo "Transient Maven/network failure (exit ${status}). Retrying in ${delay}s..."
+              sleep "$delay"
+              delay=$((delay * 2))
+              attempt=$((attempt + 1))
+              continue
+            fi
+            echo "Non-retryable Gradle failure (exit ${status})"
+            exit "$status"
+          done
