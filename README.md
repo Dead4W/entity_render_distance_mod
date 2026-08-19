@@ -74,6 +74,4 @@ Use it at your own risk. The author is not liable for crashes, world corruption,
 
 ## License
 
-Mod source and binaries: **All Rights Reserved** © 2026 Dead4W. See [`LICENSE`](LICENSE).
-
-NeoForge MDK template files remain under the MIT license in [`TEMPLATE_LICENSE.txt`](TEMPLATE_LICENSE.txt).
+**MIT License** © 2026 Dead4W. See [`LICENSE`](LICENSE).
