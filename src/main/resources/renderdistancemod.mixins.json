@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.dead4w.renderdistancemod.mixin",
+  "plugin": "dev.dead4w.renderdistancemod.mixin.RenderDistanceModMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ChunkTaskPriorityQueueLevelClampMixin",
+    "ChunkMapViewDistanceMixin",
+    "DistanceManagerPlayerTicketRangeMixin",
+    "SablePhysicsChunkLoadedEnoughMixin"
+  ],
+  "client": [
+    "OptionsDistanceLimitMixin",
+    "SodiumConfigBuilderDistanceCapMixin",
+    "SodiumGameOptionPagesDistanceCapMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
